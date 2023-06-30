@@ -150,7 +150,7 @@ diverging_bar_plot_survived_and_died_by_sex()
 # ScatterPlot de sobrevivencia por valor  pago
 
 
-
+show(grouped_bar_plot_survivors_by_class())
 
 
 
