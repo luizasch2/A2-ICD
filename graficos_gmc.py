@@ -1,15 +1,16 @@
 import data
-from bokeh.models import ColumnDataSource
+from bokeh.models import ColumnDataSource, FactorRange
 from bokeh.layouts import gridplot
 from bokeh.models import HoverTool
-from bokeh.models.annotations import Span, BoxAnnotation
 from bokeh.plotting import figure, output_file, save, show
 from bokeh.transform import dodge
 import pandas as pd
 
-output_file("GroupedBarPlot.html")
 
 def grouped_bar_plot_survivors_by_class():
+    
+    output_file("GroupedBarPlot.html")
+    
     df_survived = data.data.loc[data.data["Survived"] == 1]
     df_died = data.data.loc[data.data["Survived"] == 0]
 
@@ -61,12 +62,151 @@ def grouped_bar_plot_survivors_by_class():
 
     plot.xaxis.axis_label = "Class"
     
+    plot.xaxis.major_tick_line_color = None
+
     plot.yaxis.axis_label = "Frequency"
 
     plot.yaxis[0].ticker.num_minor_ticks = 0
 
     plot.toolbar.logo = None   
     plot.toolbar.autohide = True
-    return show(plot)
 
-grouped_bar_plot_survivors_by_class()
+    return plot
+
+grouped_bar_plot_survivors_by_class()  
+
+def diverging_bar_plot_survived_and_died_by_sex():
+
+    output_file("DivergingBarPlot.html")
+    
+    df_survived = data.data.loc[data.data["Survived"] == 1]
+    df_died = data.data.loc[data.data["Survived"] == 0]
+
+    survived_by_sex = df_survived.groupby("Sex")["Survived"].sum().reset_index()
+    count_died_by_sex = df_died.groupby("Sex")["Survived"].value_counts().reset_index()
+    count_died_by_sex["Not_survived"] = count_died_by_sex["count"]
+    died_by_sex = count_died_by_sex[["Sex","Not_survived"]]
+
+    variables = ["Total", "Female", "Male"]
+    status = ["Survived", "Not survived"]
+
+    Survivors = {"variables" : variables,
+            "Survived"   : [survived_by_sex["Survived"].sum(),
+                        survived_by_sex.loc[survived_by_sex["Sex"] == "female"]["Survived"].iloc[0],
+                        survived_by_sex.loc[survived_by_sex["Sex"] == "male"]["Survived"].iloc[0]]}
+    Dead = {"variables" : variables,
+            "Not survived"   : [died_by_sex["Not_survived"].sum()*(-1),
+                        died_by_sex.loc[died_by_sex["Sex"] == "female"]["Not_survived"].iloc[0]*(-1),
+                        died_by_sex.loc[died_by_sex["Sex"] == "male"]["Not_survived"].iloc[0]*(-1)]}
+
+    plot = figure(y_range=variables, height=350, x_range=(-16, 16), title="Fruit import/export, by element",
+            toolbar_location=None)
+
+    plot.hbar_stack(status, y="variables", color = "#2e8b57", height=0.9, source=ColumnDataSource(Survivors),
+                legend_label= "Survived")
+
+    plot.hbar_stack(status, y="variables", color="#cd5c5c", height=0.9, source=ColumnDataSource(Dead),
+                legend_label= "Not survived")
+
+    hover = HoverTool()
+    hover.tooltips = [("Survivors", "@survived"), ("Dead", "@died")]
+    plot.add_tools(hover)
+
+    ticks = list(range(-600, 601, 100))
+    plot.xaxis.ticker = ticks
+    plot.xaxis.major_label_overrides = {tick: str(abs(tick)) for tick in ticks}
+
+    plot.x_range.start = -600
+    plot.x_range.end = 600
+
+    plot.legend.background_fill_alpha = 0
+    plot.legend.padding = 30
+    plot.legend.label_text_font = "calibri"
+    
+    plot.ygrid.grid_line_color = None
+    plot.xgrid.grid_line_color = None
+
+    plot.width = 854
+    plot.height = 480
+    plot.background_fill_color = "LightGray"
+
+    plot.title.text = "Survivors by Sex"
+    plot.title.text_color = "Black"
+    plot.title.text_font = "arial"
+    plot.title.text_font_size = "30px"
+    plot.title.align = "center"
+
+    plot.xaxis.axis_label = "Frequency"
+    
+    plot.yaxis.axis_label = None
+
+    plot.toolbar.logo = None   
+    plot.toolbar.autohide = True
+
+    return plot
+
+diverging_bar_plot_survived_and_died_by_sex()
+
+# ScatterPlot de sobrevivencia por valor  pago
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
