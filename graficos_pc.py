@@ -1,9 +1,12 @@
 import data
 from bokeh.models.annotations import BoxAnnotation, Span
-from bokeh.models import ColumnDataSource, Whisker, FactorRange, HoverTool
+from bokeh.models import ColumnDataSource, Whisker, FactorRange, HoverTool, SingleIntervalTicker
 from bokeh.plotting import figure, save, output_file, show
 from bokeh.transform import factor_cmap
 import pandas as pd
+import numpy as np
+
+
 
 def scatter_fare_age():
     output_file("ScatterPlot.html")
@@ -37,14 +40,14 @@ def scatter_fare_age():
 
 def boxplot_fare_survived():
     output_file("BoxPlot.html")
-    data.data["Survived"] = data.data["Survived"].replace({0: "Não Sobreviveu", 1:"Sobreviveu"})
-    sobrevivencia = data.data.Survived.unique()
-    grafico = figure(x_range = sobrevivencia)
+    data.data["Embarked"] = data.data["Embarked"].replace({"C": "Cherbourg", "S":"Southampton", "Q":"Queenstown"})
+    embarked = data.data.Embarked.dropna().unique()
+    grafico = figure(x_range = embarked)
     #Calculando os quantis
-    quantis = data.data.groupby("Survived").Fare.quantile([0.25, 0.5, 0.75])
+    quantis = data.data.groupby("Embarked").Fare.quantile([0.25, 0.5, 0.75])
     quantis = quantis.unstack().reset_index()
-    quantis.columns = ["Survived", "q1", "q2", "q3"]
-    df = pd.merge(data.data, quantis, on="Survived", how="left")
+    quantis.columns = ["Embarked", "q1", "q2", "q3"]
+    df = pd.merge(data.data, quantis, on="Embarked", how="left")
 
     #Calculando Outliers
     iqr = df.q3 - df.q1
@@ -57,7 +60,7 @@ def boxplot_fare_survived():
     grafico.width = 854
     grafico.height = 480
     grafico.background_fill_color = "#d3d3d3"
-    grafico.title = "Taxa Paga por Sobrevivência"
+    grafico.title = "Taxa Paga por Local de Embarque"
 
     #Toolbar
     grafico.toolbar.logo = None
@@ -67,25 +70,20 @@ def boxplot_fare_survived():
     #Legendas
     grafico.axis.axis_label_text_font = "Trebuchet MS"
     grafico.title.text_font = "Trebuchet MS"
-    grafico.xaxis.axis_label = "Sobrevivência"
+    grafico.xaxis.axis_label = "Local de Embarque"
     grafico.yaxis.axis_label = "Valor Pago"
 
     #Intervalo de Outliers
-    bigodes = Whisker(base="Survived", upper="acima", lower="abaixo", source=source)
+    bigodes = Whisker(base="Embarked", upper="acima", lower="abaixo", source=source)
     bigodes.upper_head.size = 20
     bigodes.lower_head.size = 20
     grafico.add_layout(bigodes)
 
     #Caixa
-    grafico.vbar("Survived", 0.7, "q1", "q2", source=source, line_color="black")
-    grafico.vbar("Survived", 0.7, "q2", "q3", source=source, line_color="black")
+    grafico.vbar("Embarked", 0.7, "q1", "q2", source=source, line_color="black")
+    grafico.vbar("Embarked", 0.7, "q2", "q3", source=source, line_color="black")
 
-    #Outliers
-    outliers = df[~df.Fare.between(df.abaixo, df.acima)]
-    grafico.scatter("Fare", "Survived", source=outliers, size=6, color="black", alpha=0.3)
     return show(grafico)
-    
-#boxplot_fare_survived()
 
 def stacked_bars_embarked():
     df = data.data
@@ -131,4 +129,34 @@ def stacked_bars_embarked():
 
     return grafico
 
-show(stacked_bars_embarked())
+def histograma_tarifa():
+    df = pd.DataFrame.dropna(data.data)
+
+    grafico = figure(width=854, height=480, toolbar_location=None, title="Histograma de Valor Pago")
+
+    hist, edges = np.histogram(df["Fare"], bins=25)
+
+    source = ColumnDataSource(data = dict(hist=hist,  left=edges[:-1], right=edges[1:]))
+
+    grafico.quad(top="hist", bottom=0, left="left", right="right", source=source,
+                 fill_color="#5794E0", line_color="black", legend_label="")
+
+    grafico.y_range.start = 0
+    grafico.xaxis.axis_label = "Valor Pago"
+    grafico.yaxis.axis_label = "Quantidade de Passageiros"
+
+    grafico.legend.visible = False
+
+    grafico.x_range.start = 0
+    grafico.xaxis.ticker = SingleIntervalTicker(interval=102)
+    grafico.xaxis.major_tick_line_color = None
+    grafico.xaxis.minor_tick_line_color = None
+    
+    # #ticks = list(range(0, 512, 102))
+    # #grafico.xaxis.ticker = ticks
+    # ticks = SingleIntervalTicker(interval=102.4)
+    # grafico.xaxis.major_label_overrides = {tick: str(int(tick)) for tick in ticks}
+
+    return grafico
+
+show(histograma_tarifa())
