@@ -1,29 +1,19 @@
 import data
 import pandas as pd
 import numpy as np
+from bokeh.io import export_png
 from bokeh.models import ColumnDataSource, FactorRange, Span
 from bokeh.plotting import figure, show
 from bokeh.transform import factor_cmap
 import random
 
 def bar_chart_age_sex():
-    # Definindo as categorias
-    categories = [("Crianças", "Mulheres"), ("Crianças", "Homens"), ("Adultos", "Mulheres"), ("Adultos", "Homens")]
-
-    # Contando o número de mortos em cada categoria
-    deaths = [len(data.data[(data.data['Sex'] == 'female') & (data.data['Age'] < 18) & (data.data['Survived'] == 0)]),
-              len(data.data[(data.data['Sex'] == 'male') & (data.data['Age'] < 18) & (data.data['Survived'] == 0)]),
-              len(data.data[(data.data['Sex'] == 'female') & (data.data['Age'] >= 18) & (data.data['Survived'] == 0)]),
-              len(data.data[(data.data['Sex'] == 'male') & (data.data['Age'] >= 18) & (data.data['Survived'] == 0)])]
-
-    source = ColumnDataSource(data=dict(categories=categories, deaths=deaths))
-
     # Criando a figura
-    plot = figure(x_range=FactorRange(*categories), width=600, height=360, title="Mortos por idade e gênero")
+    plot = figure(x_range=FactorRange(*data.categories), width=600, height=360, title="Mortos por idade e gênero")
 
     # Adicionando as barras
-    plot.vbar(x='categories', top='deaths', width=0.9, source=source, 
-              fill_color=factor_cmap('categories', palette=['#F1C40F', '#1E1902', '#F1C40F', '#1E1902'], factors=categories), line_color=None)
+    plot.vbar(x='categories', top='deaths', width=0.9, source=data.source3, 
+              fill_color=factor_cmap('categories', palette=['#F1C40F', '#1E1902', '#F1C40F', '#1E1902'], factors=data.categories), line_color=None)
 
     # Definindo as propriedades do plot
     plot.background_fill_color = "#9BC5E1"
@@ -31,8 +21,8 @@ def bar_chart_age_sex():
     plot.xgrid.grid_line_color = None
     plot.y_range.start = 0
 
-    plot.add_layout(Span(location=deaths[1], dimension='width', line_color='black', line_dash='dashed', line_width=1))
-    plot.add_layout(Span(location=deaths[3], dimension='width', line_color='black', line_dash='dashed', line_width=1))
+    plot.add_layout(Span(location=data.deaths[1], dimension='width', line_color='black', line_dash='dashed', line_width=1))
+    plot.add_layout(Span(location=data.deaths[3], dimension='width', line_color='black', line_dash='dashed', line_width=1))
 
     # Toolbar
     plot.toolbar.logo = None
@@ -42,18 +32,12 @@ def bar_chart_age_sex():
     return plot
 
 def scatter_plot_class_fare():
-    # Criando um dataframe com 'jittering' na coluna 'Pclass'
-    data_jittered = data.data.copy()
-    data_jittered['Pclass'] = data_jittered['Pclass'].apply(lambda x: x + random.uniform(-0.3, 0.3))
-
-    source = ColumnDataSource(data_jittered)
-
     # Criando a figura
     plot = figure(width=800, height=400, title="Classe vs Preço pago", 
                   x_axis_label='Classe', y_axis_label='Preço pago (em dólares)')
 
     # Adicionando o gráfico de dispersão
-    plot.circle('Pclass', 'Fare', source=source, color="#E2EBF2", alpha=0.7)
+    plot.circle('Pclass', 'Fare', source=data.source4, color="#E2EBF2", alpha=0.7)
     plot.xaxis.ticker = [1, 2, 3]
 
     # Definindo as propriedades do plot
@@ -69,19 +53,11 @@ def scatter_plot_class_fare():
     return plot
 
 def histogram_age():
-    # Criando o dataframe e removendo as linhas com dados faltantes
-    df = pd.DataFrame.dropna(data.data)
-
-    # Criando o histograma
-    hist, edges = np.histogram(df['Age'], bins=10)
-    
-    source = ColumnDataSource(data=dict(hist=hist, left=edges[:-1], right=edges[1:]))
-
     # Criando a figura
     plot = figure(width=800, height=400, title="Histograma de Idade", x_axis_label='Idade', y_axis_label='Contagem')
 
     # Adicionando o histograma
-    plot.quad(top='hist', bottom=0, left='left', right='right', source=source, fill_color="#E6ECF0", line_color="#CCD9E5")
+    plot.quad(top='hist', bottom=0, left='left', right='right', source=data.source5, fill_color="#E6ECF0", line_color="#CCD9E5")
 
     # Definindo as propriedades do plot
     plot.background_fill_color = "#134C73"
@@ -96,4 +72,5 @@ def histogram_age():
 
     return plot
 
-show(histogram_age())
+teste = bar_chart_age_sex()
+export_png(teste, filename="bar_chart_age_sex.png")

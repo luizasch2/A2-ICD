@@ -43,8 +43,8 @@ def ageClassSex():
     p.segment('groups', 'lower', 'groups', 'q2', source=source, line_color="black")
 
     # Retângulos de quartil
-    p.vbar('groups', 0.7, 'q2', 'upper', source=source1, fill_color="#E08E79", line_color="black")
-    p.vbar('groups', 0.7, 'lower', 'q2', source=source1, fill_color="#3B8686", line_color="black")
+    p.vbar('groups', 0.7, 'q2', 'upper', source=source1, fill_color="#1E1902", line_color="black")
+    p.vbar('groups', 0.7, 'lower', 'q2', source=source1, fill_color="#F1C40F", line_color="black")
 
     # Whiskers
     p.rect('groups', 'lower_whisker', 0.2, 0.01, source=source1, line_color="black")
@@ -53,6 +53,13 @@ def ageClassSex():
     # Linhas de whisker
     p.segment('groups', 'lower_whisker', 'groups', 'lower', source=source1, line_color="black")
     p.segment('groups', 'upper_whisker', 'groups', 'upper', source=source1, line_color="black")
+
+    # Adicionando cor ao fundo
+    p.background_fill_color = "#9BC5E1"
+
+    # Tirar grid eixo y
+    p.xgrid.grid_line_color = None
+
 
     return p
 
@@ -68,9 +75,10 @@ def sexSurvive():
             legend_field='generos', source=source2)
         
     p.legend.orientation = "horizontal"
-    p.legend.location = "top_right"
+    p.legend.location = "top_center"
 
 
     return p
 
-show(sexSurvive())
+
+show(ageClassSex())

@@ -1,6 +1,7 @@
 from bokeh.models import ColumnDataSource
 import pandas as pd 
 import numpy as np
+import random
 
 data = pd.read_csv("titanic.csv")
 
@@ -27,3 +28,44 @@ mulheres_sobreviventes = data[(data['Survived'] == 1) & (data['Sex'] == 'female'
 homens_sobreviventes = data[(data['Survived'] == 1) & (data['Sex'] == 'male')].shape[0]
 
 source2 = ColumnDataSource(data=dict(generos=['Masculino', 'Feminino'], sobreviventes=[homens_sobreviventes, mulheres_sobreviventes]))
+
+
+'''
+Objetos ColumnDataSource para os Gráficos - Guilherme
+'''
+
+# GRÁFICO 1
+
+# Definindo as categorias
+categories = [("Crianças", "Mulheres"), ("Crianças", "Homens"), ("Adultos", "Mulheres"), ("Adultos", "Homens")]
+
+# Contando o número de mortos em cada categoria
+deaths = [len(data[(data['Sex'] == 'female') & (data['Age'] < 18) & (data['Survived'] == 0)]),
+            len(data[(data['Sex'] == 'male') & (data['Age'] < 18) & (data['Survived'] == 0)]),
+            len(data[(data['Sex'] == 'female') & (data['Age'] >= 18) & (data['Survived'] == 0)]),
+            len(data[(data['Sex'] == 'male') & (data['Age'] >= 18) & (data['Survived'] == 0)])]
+
+source3 = ColumnDataSource(data=dict(categories=categories, deaths=deaths))
+
+
+# GRÁFICO 2
+
+# Criando um dataframe com 'jittering' na coluna 'Pclass'
+data_jittered = data.copy()
+data_jittered['Pclass'] = data_jittered['Pclass'].apply(lambda x: x + random.uniform(-0.3, 0.3))
+
+source4 = ColumnDataSource(data_jittered)
+
+
+# GRÁFICO 3
+
+# Criando o dataframe e removendo as linhas com dados faltantes
+df = pd.DataFrame.dropna(data)
+
+# Criando o histograma
+hist, edges = np.histogram(df['Age'], bins=10)
+
+source5 = ColumnDataSource(data=dict(hist=hist, left=edges[:-1], right=edges[1:]))
+
+
+
