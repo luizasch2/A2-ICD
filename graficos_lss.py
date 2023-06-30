@@ -33,7 +33,7 @@ def ageSurvived():
 
     return p
 
-def sexFare():
+def ageFare():
     # Criando a figura
     p = figure(title='Gráfico de Dispersão', x_axis_label='Idade', y_axis_label='Tarifa')
 
@@ -46,3 +46,4 @@ def sexFare():
 
 
     return p
+
