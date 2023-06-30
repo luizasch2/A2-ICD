@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Bokeh Plot</title>
+    <style>
+      html, body {
+        box-sizing: border-box;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-3.1.1.min.js"></script>
+    <script type="text/javascript">
+        Bokeh.set_log_level("info");
+    </script>
+  </head>
+  <body>
+    <div id="b18b01b6-8705-4185-956d-1dd06435cac1" data-root-id="p1007" style="display: contents;"></div>
+  
+    <script type="application/json" id="p1170">
+      {"289db4ec-b527-494d-928a-a41c1a0e7ac3":{"version":"3.1.1","title":"Bokeh Application","defs":[],"roots":[{"type":"object","name":"Figure","id":"p1007","attributes":{"width":854,"height":480,"x_range":{"type":"object","name":"FactorRange","id":"p1016","attributes":{"factors":["1st","2nd","3rd"]}},"y_range":{"type":"object","name":"DataRange1d","id":"p1009","attributes":{"start":0}},"x_scale":{"type":"object","name":"CategoricalScale","id":"p1020"},"y_scale":{"type":"object","name":"LinearScale","id":"p1022"},"title":{"type":"object","name":"Title","id":"p1014","attributes":{"text":"Survivors by Class","text_color":"Black","text_font":"arial","text_font_size":"30px","align":"center"}},"renderers":[{"type":"object","name":"GlyphRenderer","id":"p1059","attributes":{"data_source":{"type":"object","name":"ColumnDataSource","id":"p1004","attributes":{"selected":{"type":"object","name":"Selection","id":"p1005","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"p1006"},"data":{"type":"map","entries":[["classes",["1st","2nd","3rd"]],["survived",[136,87,119]],["died",[80,97,372]]]}}},"view":{"type":"object","name":"CDSView","id":"p1060","attributes":{"filter":{"type":"object","name":"AllIndices","id":"p1061"}}},"glyph":{"type":"object","name":"VBar","id":"p1056","attributes":{"x":{"type":"field","field":"classes","transform":{"type":"object","name":"Dodge","id":"p1052","attributes":{"value":-0.21,"range":{"id":"p1016"}}}},"width":{"type":"value","value":0.4},"top":{"type":"field","field":"survived"},"line_color":{"type":"value","value":"#2e8b57"},"fill_color":{"type":"value","value":"#2e8b57"},"hatch_color":{"type":"value","value":"#2e8b57"}}},"nonselection_glyph":{"type":"object","name":"VBar","id":"p1057","attributes":{"x":{"type":"field","field":"classes","transform":{"id":"p1052"}},"width":{"type":"value","value":0.4},"top":{"type":"field","field":"survived"},"line_color":{"type":"value","value":"#2e8b57"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"value","value":"#2e8b57"},"fill_alpha":{"type":"value","value":0.1},"hatch_color":{"type":"value","value":"#2e8b57"},"hatch_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"VBar","id":"p1058","attributes":{"x":{"type":"field","field":"classes","transform":{"id":"p1052"}},"width":{"type":"value","value":0.4},"top":{"type":"field","field":"survived"},"line_color":{"type":"value","value":"#2e8b57"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"value","value":"#2e8b57"},"fill_alpha":{"type":"value","value":0.2},"hatch_color":{"type":"value","value":"#2e8b57"},"hatch_alpha":{"type":"value","value":0.2}}}}},{"type":"object","name":"GlyphRenderer","id":"p1071","attributes":{"data_source":{"id":"p1004"},"view":{"type":"object","name":"CDSView","id":"p1072","attributes":{"filter":{"type":"object","name":"AllIndices","id":"p1073"}}},"glyph":{"type":"object","name":"VBar","id":"p1068","attributes":{"x":{"type":"field","field":"classes","transform":{"type":"object","name":"Dodge","id":"p1064","attributes":{"value":0.21,"range":{"id":"p1016"}}}},"width":{"type":"value","value":0.4},"top":{"type":"field","field":"died"},"line_color":{"type":"value","value":"#cd5c5c"},"fill_color":{"type":"value","value":"#cd5c5c"},"hatch_color":{"type":"value","value":"#cd5c5c"}}},"nonselection_glyph":{"type":"object","name":"VBar","id":"p1069","attributes":{"x":{"type":"field","field":"classes","transform":{"id":"p1064"}},"width":{"type":"value","value":0.4},"top":{"type":"field","field":"died"},"line_color":{"type":"value","value":"#cd5c5c"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"value","value":"#cd5c5c"},"fill_alpha":{"type":"value","value":0.1},"hatch_color":{"type":"value","value":"#cd5c5c"},"hatch_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"VBar","id":"p1070","attributes":{"x":{"type":"field","field":"classes","transform":{"id":"p1064"}},"width":{"type":"value","value":0.4},"top":{"type":"field","field":"died"},"line_color":{"type":"value","value":"#cd5c5c"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"value","value":"#cd5c5c"},"fill_alpha":{"type":"value","value":0.2},"hatch_color":{"type":"value","value":"#cd5c5c"},"hatch_alpha":{"type":"value","value":0.2}}}}}],"toolbar":{"type":"object","name":"Toolbar","id":"p1012","attributes":{"logo":null,"autohide":true,"tools":[{"type":"object","name":"PanTool","id":"p1037"},{"type":"object","name":"WheelZoomTool","id":"p1038"},{"type":"object","name":"BoxZoomTool","id":"p1039","attributes":{"overlay":{"type":"object","name":"BoxAnnotation","id":"p1040","attributes":{"syncable":false,"level":"overlay","visible":false,"left_units":"canvas","right_units":"canvas","bottom_units":"canvas","top_units":"canvas","line_color":"black","line_alpha":1.0,"line_width":2,"line_dash":[4,4],"fill_color":"lightgrey","fill_alpha":0.5}}}},{"type":"object","name":"SaveTool","id":"p1041"},{"type":"object","name":"ResetTool","id":"p1042"},{"type":"object","name":"HelpTool","id":"p1043"},{"type":"object","name":"HoverTool","id":"p1075","attributes":{"renderers":"auto","tooltips":[["Survivors","@survived"],["Dead","@died"]]}}]}},"left":[{"type":"object","name":"LinearAxis","id":"p1030","attributes":{"ticker":{"type":"object","name":"BasicTicker","id":"p1031","attributes":{"num_minor_ticks":0,"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"p1032"},"axis_label":"Frequency","major_label_policy":{"type":"object","name":"AllLabels","id":"p1033"}}}],"below":[{"type":"object","name":"CategoricalAxis","id":"p1024","attributes":{"ticker":{"type":"object","name":"CategoricalTicker","id":"p1025"},"formatter":{"type":"object","name":"CategoricalTickFormatter","id":"p1026"},"axis_label":"Class","major_label_policy":{"type":"object","name":"AllLabels","id":"p1027"}}}],"center":[{"type":"object","name":"Grid","id":"p1029","attributes":{"axis":{"id":"p1024"},"grid_line_color":null}},{"type":"object","name":"Grid","id":"p1036","attributes":{"dimension":1,"axis":{"id":"p1030"}}},{"type":"object","name":"Legend","id":"p1062","attributes":{"location":"top_left","background_fill_alpha":0,"label_text_font":"calibri","padding":30,"items":[{"type":"object","name":"LegendItem","id":"p1063","attributes":{"label":{"type":"value","value":"Survived"},"renderers":[{"id":"p1059"}]}},{"type":"object","name":"LegendItem","id":"p1074","attributes":{"label":{"type":"value","value":"Not survived"},"renderers":[{"id":"p1071"}]}}]}}],"background_fill_color":"LightGray"}}],"callbacks":{"type":"map"}}}
+    </script>
+    <script type="text/javascript">
+      (function() {
+        const fn = function() {
+          Bokeh.safely(function() {
+            (function(root) {
+              function embed_document(root) {
+              const docs_json = document.getElementById('p1170').textContent;
+              const render_items = [{"docid":"289db4ec-b527-494d-928a-a41c1a0e7ac3","roots":{"p1007":"b18b01b6-8705-4185-956d-1dd06435cac1"},"root_ids":["p1007"]}];
+              root.Bokeh.embed.embed_items(docs_json, render_items);
+              }
+              if (root.Bokeh !== undefined) {
+                embed_document(root);
+              } else {
+                let attempts = 0;
+                const timer = setInterval(function(root) {
+                  if (root.Bokeh !== undefined) {
+                    clearInterval(timer);
+                    embed_document(root);
+                  } else {
+                    attempts++;
+                    if (attempts > 100) {
+                      clearInterval(timer);
+                      console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+                    }
+                  }
+                }, 10, root)
+              }
+            })(window);
+          });
+        };
+        if (document.readyState != "loading") fn();
+        else document.addEventListener("DOMContentLoaded", fn);
+      })();
+    </script>
+  </body>
+</html>
