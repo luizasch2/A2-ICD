@@ -80,8 +80,33 @@ def boxplot_fare_survived():
     grafico.vbar("Survived", 0.7, "q1", "q2", source=source, line_color="black")
     grafico.vbar("Survived", 0.7, "q2", "q3", source=source, line_color="black")
 
+    #Outliers
+    outliers = df[~df.Fare.between(df.abaixo, df.acima)]
+    grafico.scatter("Fare", "Survived", source=outliers, size=6, color="black", alpha=0.3)
     return show(grafico)
     
-#boxplot_fare_survived()
+boxplot_fare_survived()
 
-print(data.data.dtypes)
+def stacked_bars_embarked():
+    df = data.data
+
+    eixo_x = ["Q", "S", "C"]
+
+    freq = pd.crosstab(data.data["Survived"], data.data["Embarked"])
+    freq.columns = ["Survived", "Dyed", "sla"]
+
+    source = ColumnDataSource(freq.reset_index()) 
+
+    locais_de_embarque = data.data.Embarked.dropna().unique()
+    Survived = ["0" , "1"]
+    grafico = figure(x_range=locais_de_embarque)
+
+    grafico.width = 854
+    grafico.height = 480
+
+    grafico.title = "Sobreviventes por Local de Embarque"
+
+    grafico.vbar_stack(Survived, x="Embarked", width=0.9, color=["#24ed32", "#ae21fe"], source=source, legend_label=Survived)
+    return grafico
+
+show(stacked_bars_embarked())

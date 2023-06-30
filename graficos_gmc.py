@@ -47,6 +47,6 @@ def grouped_bar_plot_survivors_by_class():
     plot.x_range.range_padding = 0.3
     plot.xgrid.grid_line_color = None
 
-    return plot
+    return show(plot)
 
 grouped_bar_plot_survivors_by_class()
