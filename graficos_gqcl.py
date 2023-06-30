@@ -1,6 +1,7 @@
 import data
 import pandas as pd
 import numpy as np
+from bokeh.io import export_png
 from bokeh.models import ColumnDataSource, FactorRange, Span
 from bokeh.plotting import figure, show
 from bokeh.transform import factor_cmap
@@ -71,4 +72,5 @@ def histogram_age():
 
     return plot
 
-show(histogram_age())
+teste = bar_chart_age_sex()
+export_png(teste, filename="bar_chart_age_sex.png")
