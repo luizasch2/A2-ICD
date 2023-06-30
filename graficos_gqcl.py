@@ -1,4 +1,6 @@
 import data
+import pandas as pd
+import numpy as np
 from bokeh.models import ColumnDataSource, FactorRange, Span
 from bokeh.plotting import figure, show
 from bokeh.transform import factor_cmap
@@ -23,6 +25,7 @@ def bar_chart_age_sex():
     plot.vbar(x='categories', top='deaths', width=0.9, source=source, 
               fill_color=factor_cmap('categories', palette=['#F1C40F', '#1E1902', '#F1C40F', '#1E1902'], factors=categories), line_color=None)
 
+    # Definindo as propriedades do plot
     plot.background_fill_color = "#9BC5E1"
     plot.ygrid.grid_line_color = "#81B0D0"
     plot.xgrid.grid_line_color = None
@@ -53,6 +56,7 @@ def scatter_plot_class_fare():
     plot.circle('Pclass', 'Fare', source=source, color="#E2EBF2", alpha=0.7)
     plot.xaxis.ticker = [1, 2, 3]
 
+    # Definindo as propriedades do plot
     plot.background_fill_color = "#134C73"
     plot.ygrid.grid_line_color = "#1F5D87"
     plot.xgrid.grid_line_color = None
@@ -64,4 +68,32 @@ def scatter_plot_class_fare():
 
     return plot
 
-show(scatter_plot_class_fare())
+def histogram_age():
+    # Criando o dataframe e removendo as linhas com dados faltantes
+    df = pd.DataFrame.dropna(data.data)
+
+    # Criando o histograma
+    hist, edges = np.histogram(df['Age'], bins=10)
+    
+    source = ColumnDataSource(data=dict(hist=hist, left=edges[:-1], right=edges[1:]))
+
+    # Criando a figura
+    plot = figure(width=800, height=400, title="Histograma de Idade", x_axis_label='Idade', y_axis_label='Contagem')
+
+    # Adicionando o histograma
+    plot.quad(top='hist', bottom=0, left='left', right='right', source=source, fill_color="#E6ECF0", line_color="#CCD9E5")
+
+    # Definindo as propriedades do plot
+    plot.background_fill_color = "#134C73"
+    plot.ygrid.grid_line_color = "#1F5D87"
+    plot.xgrid.grid_line_color = None
+    plot.y_range.start = 0
+
+    # Toolbar
+    plot.toolbar.logo = None
+    plot.toolbar.autohide = True
+    plot.toolbar_location = "right"
+
+    return plot
+
+show(histogram_age())
