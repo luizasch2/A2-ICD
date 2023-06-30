@@ -9,7 +9,7 @@ import numpy as np
 
 
 def scatter_fare_age():
-    output_file("ScatterPlot.html")
+    output_file("ScatterPlot_FareByAge.html")
     grafico = figure()
 
     #Confifurando a figura
@@ -22,21 +22,32 @@ def scatter_fare_age():
     grafico.circle(source=data.source, 
                    x="Age", 
                    y="Fare",
-                   color="#474BDA"
+                   color="#474BDA",
+                   fill_alpha=0.7,
+                   alpha = 0.7
                    )
     
-    #Legendas
-    grafico.axis.axis_label_text_font = "Trebuchet MS"
-    grafico.title.text_font = "Trebuchet MS"
+    #Legendas e Eixos
+    grafico.axis.axis_label_text_font = "Arial"
     grafico.xaxis.axis_label = "Idade"
     grafico.yaxis.axis_label = "Valor Pago"
+    grafico.x_range.start = -1
+    grafico.y_range.start = -5
     
+    #Título
+    grafico.title.text_color = "Black"
+    grafico.title.text_font = "Arial"
+    grafico.title.text_font_size = "30px"
+    grafico.title.align = "center"
+
     #Toolbar
     grafico.toolbar.logo = None
     grafico.toolbar.autohide = True
     grafico.toolbar_location = "right"
 
-    return show(grafico)
+    return grafico
+
+show(scatter_fare_age())
 
 def boxplot_fare_survived():
     output_file("BoxPlot.html")
@@ -151,12 +162,7 @@ def histograma_tarifa():
     grafico.xaxis.ticker = SingleIntervalTicker(interval=102)
     grafico.xaxis.major_tick_line_color = None
     grafico.xaxis.minor_tick_line_color = None
-    
-    # #ticks = list(range(0, 512, 102))
-    # #grafico.xaxis.ticker = ticks
-    # ticks = SingleIntervalTicker(interval=102.4)
-    # grafico.xaxis.major_label_overrides = {tick: str(int(tick)) for tick in ticks}
 
     return grafico
 
-show(histograma_tarifa())
+#show(histograma_tarifa())
