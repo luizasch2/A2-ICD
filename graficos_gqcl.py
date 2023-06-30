@@ -1,7 +1,7 @@
 import data
 import pandas as pd
 import numpy as np
-from bokeh.io import output_file
+from bokeh.io import export_png
 from bokeh.models import ColumnDataSource, FactorRange, Span
 from bokeh.plotting import figure, show
 from bokeh.transform import factor_cmap
@@ -29,8 +29,6 @@ def bar_chart_age_sex():
     plot.toolbar.autohide = True
     plot.toolbar_location = "right"
 
-    output_file("bar_chart_age_sex.html")
-
     return plot
 
 def scatter_plot_class_fare():
@@ -52,8 +50,6 @@ def scatter_plot_class_fare():
     plot.toolbar.autohide = True
     plot.toolbar_location = "right"
 
-    output_file("scatter_plot_class_fare.html")
-
     return plot
 
 def histogram_age():
@@ -74,10 +70,4 @@ def histogram_age():
     plot.toolbar.autohide = True
     plot.toolbar_location = "right"
 
-    output_file("histogram_age.html")
-
     return plot
-
-show(bar_chart_age_sex())
-show(scatter_plot_class_fare())
-show(histogram_age())

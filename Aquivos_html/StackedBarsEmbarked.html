@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Bokeh Plot</title>
+    <style>
+      html, body {
+        box-sizing: border-box;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-3.1.1.min.js"></script>
+    <script type="text/javascript">
+        Bokeh.set_log_level("info");
+    </script>
+  </head>
+  <body>
+    <div id="d6fff490-09ee-4aeb-a9c1-629d778069a1" data-root-id="p1332" style="display: contents;"></div>
+  
+    <script type="application/json" id="p1513">
+      {"6393b28e-ff68-412f-9b6b-366979a90074":{"version":"3.1.1","title":"Bokeh Application","defs":[],"roots":[{"type":"object","name":"Figure","id":"p1332","attributes":{"width":854,"height":480,"x_range":{"type":"object","name":"FactorRange","id":"p1341","attributes":{"factors":["Cherbourg","Queenstown","Southampton"]}},"y_range":{"type":"object","name":"DataRange1d","id":"p1334","attributes":{"start":0}},"x_scale":{"type":"object","name":"CategoricalScale","id":"p1345"},"y_scale":{"type":"object","name":"LinearScale","id":"p1347"},"title":{"type":"object","name":"Title","id":"p1337","attributes":{"text":"Sobreviventes por Local de Embarque","text_color":"Black","text_font":"Arial","text_font_size":"30px","align":"center"}},"renderers":[{"type":"object","name":"GlyphRenderer","id":"p1398","attributes":{"name":"Survived","data_source":{"type":"object","name":"ColumnDataSource","id":"p1389","attributes":{"selected":{"type":"object","name":"Selection","id":"p1390","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"p1391"},"data":{"type":"map","entries":[["Embarked",["Cherbourg","Queenstown","Southampton"]],["Survived",[93,30,217]],["Died",[75,47,427]]]}}},"view":{"type":"object","name":"CDSView","id":"p1399","attributes":{"filter":{"type":"object","name":"AllIndices","id":"p1400"}}},"glyph":{"type":"object","name":"VBar","id":"p1395","attributes":{"x":{"type":"field","field":"Embarked"},"width":{"type":"value","value":0.9},"bottom":{"type":"expr","expr":{"type":"object","name":"Stack","id":"p1385","attributes":{"fields":[]}}},"top":{"type":"expr","expr":{"type":"object","name":"Stack","id":"p1386","attributes":{"fields":["Survived"]}}},"line_color":{"type":"value","value":"#2e8b57"},"fill_color":{"type":"value","value":"#2e8b57"},"hatch_color":{"type":"value","value":"#2e8b57"}}},"nonselection_glyph":{"type":"object","name":"VBar","id":"p1396","attributes":{"x":{"type":"field","field":"Embarked"},"width":{"type":"value","value":0.9},"bottom":{"type":"expr","expr":{"id":"p1385"}},"top":{"type":"expr","expr":{"id":"p1386"}},"line_color":{"type":"value","value":"#2e8b57"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"value","value":"#2e8b57"},"fill_alpha":{"type":"value","value":0.1},"hatch_color":{"type":"value","value":"#2e8b57"},"hatch_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"VBar","id":"p1397","attributes":{"x":{"type":"field","field":"Embarked"},"width":{"type":"value","value":0.9},"bottom":{"type":"expr","expr":{"id":"p1385"}},"top":{"type":"expr","expr":{"id":"p1386"}},"line_color":{"type":"value","value":"#2e8b57"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"value","value":"#2e8b57"},"fill_alpha":{"type":"value","value":0.2},"hatch_color":{"type":"value","value":"#2e8b57"},"hatch_alpha":{"type":"value","value":0.2}}}}},{"type":"object","name":"GlyphRenderer","id":"p1412","attributes":{"name":"Died","data_source":{"type":"object","name":"ColumnDataSource","id":"p1403","attributes":{"selected":{"type":"object","name":"Selection","id":"p1404","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"p1405"},"data":{"type":"map","entries":[["Embarked",["Cherbourg","Queenstown","Southampton"]],["Survived",[93,30,217]],["Died",[75,47,427]]]}}},"view":{"type":"object","name":"CDSView","id":"p1413","attributes":{"filter":{"type":"object","name":"AllIndices","id":"p1414"}}},"glyph":{"type":"object","name":"VBar","id":"p1409","attributes":{"x":{"type":"field","field":"Embarked"},"width":{"type":"value","value":0.9},"bottom":{"type":"expr","expr":{"type":"object","name":"Stack","id":"p1387","attributes":{"fields":["Survived"]}}},"top":{"type":"expr","expr":{"type":"object","name":"Stack","id":"p1388","attributes":{"fields":["Survived","Died"]}}},"line_color":{"type":"value","value":"#cd5c5c"},"fill_color":{"type":"value","value":"#cd5c5c"},"hatch_color":{"type":"value","value":"#cd5c5c"}}},"nonselection_glyph":{"type":"object","name":"VBar","id":"p1410","attributes":{"x":{"type":"field","field":"Embarked"},"width":{"type":"value","value":0.9},"bottom":{"type":"expr","expr":{"id":"p1387"}},"top":{"type":"expr","expr":{"id":"p1388"}},"line_color":{"type":"value","value":"#cd5c5c"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"value","value":"#cd5c5c"},"fill_alpha":{"type":"value","value":0.1},"hatch_color":{"type":"value","value":"#cd5c5c"},"hatch_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"VBar","id":"p1411","attributes":{"x":{"type":"field","field":"Embarked"},"width":{"type":"value","value":0.9},"bottom":{"type":"expr","expr":{"id":"p1387"}},"top":{"type":"expr","expr":{"id":"p1388"}},"line_color":{"type":"value","value":"#cd5c5c"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"value","value":"#cd5c5c"},"fill_alpha":{"type":"value","value":0.2},"hatch_color":{"type":"value","value":"#cd5c5c"},"hatch_alpha":{"type":"value","value":0.2}}}}}],"toolbar":{"type":"object","name":"Toolbar","id":"p1335","attributes":{"logo":null,"autohide":true,"tools":[{"type":"object","name":"PanTool","id":"p1362"},{"type":"object","name":"WheelZoomTool","id":"p1363"},{"type":"object","name":"BoxZoomTool","id":"p1364","attributes":{"overlay":{"type":"object","name":"BoxAnnotation","id":"p1365","attributes":{"syncable":false,"level":"overlay","visible":false,"left_units":"canvas","right_units":"canvas","bottom_units":"canvas","top_units":"canvas","line_color":"black","line_alpha":1.0,"line_width":2,"line_dash":[4,4],"fill_color":"lightgrey","fill_alpha":0.5}}}},{"type":"object","name":"SaveTool","id":"p1366"},{"type":"object","name":"ResetTool","id":"p1367"},{"type":"object","name":"HelpTool","id":"p1368"},{"type":"object","name":"HoverTool","id":"p1377","attributes":{"renderers":"auto","tooltips":[["Dead","@Died"],["Survivors","@Survived"]]}}]}},"left":[{"type":"object","name":"LinearAxis","id":"p1355","attributes":{"ticker":{"type":"object","name":"BasicTicker","id":"p1356","attributes":{"num_minor_ticks":0,"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"p1358"},"major_label_policy":{"type":"object","name":"AllLabels","id":"p1357"}}}],"below":[{"type":"object","name":"CategoricalAxis","id":"p1349","attributes":{"ticker":{"type":"object","name":"CategoricalTicker","id":"p1350"},"formatter":{"type":"object","name":"CategoricalTickFormatter","id":"p1352"},"major_label_policy":{"type":"object","name":"AllLabels","id":"p1351"}}}],"center":[{"type":"object","name":"Grid","id":"p1354","attributes":{"axis":{"id":"p1349"},"grid_line_color":null}},{"type":"object","name":"Grid","id":"p1361","attributes":{"dimension":1,"axis":{"id":"p1355"}}},{"type":"object","name":"Legend","id":"p1401","attributes":{"location":"top_left","background_fill_alpha":0,"label_text_font":"calibri","padding":30,"items":[{"type":"object","name":"LegendItem","id":"p1402","attributes":{"label":{"type":"value","value":"Survived"},"renderers":[{"id":"p1398"}]}},{"type":"object","name":"LegendItem","id":"p1415","attributes":{"label":{"type":"value","value":"Died"},"renderers":[{"id":"p1412"}]}}]}}],"background_fill_color":"LightGray"}}],"callbacks":{"type":"map"}}}
+    </script>
+    <script type="text/javascript">
+      (function() {
+        const fn = function() {
+          Bokeh.safely(function() {
+            (function(root) {
+              function embed_document(root) {
+              const docs_json = document.getElementById('p1513').textContent;
+              const render_items = [{"docid":"6393b28e-ff68-412f-9b6b-366979a90074","roots":{"p1332":"d6fff490-09ee-4aeb-a9c1-629d778069a1"},"root_ids":["p1332"]}];
+              root.Bokeh.embed.embed_items(docs_json, render_items);
+              }
+              if (root.Bokeh !== undefined) {
+                embed_document(root);
+              } else {
+                let attempts = 0;
+                const timer = setInterval(function(root) {
+                  if (root.Bokeh !== undefined) {
+                    clearInterval(timer);
+                    embed_document(root);
+                  } else {
+                    attempts++;
+                    if (attempts > 100) {
+                      clearInterval(timer);
+                      console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+                    }
+                  }
+                }, 10, root)
+              }
+            })(window);
+          });
+        };
+        if (document.readyState != "loading") fn();
+        else document.addEventListener("DOMContentLoaded", fn);
+      })();
+    </script>
+  </body>
+</html>

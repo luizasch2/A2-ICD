@@ -9,7 +9,7 @@ import pandas as pd
 
 def grouped_bar_plot_survivors_by_class():
     
-    output_file("GroupedBarPlot.html")
+    output_file("./Arquivos_html/GroupedBarPlot.html")
     
     df_survived = data.data.loc[data.data["Survived"] == 1]
     df_died = data.data.loc[data.data["Survived"] == 0]
@@ -72,12 +72,11 @@ def grouped_bar_plot_survivors_by_class():
     plot.toolbar.autohide = True
 
     return plot
-
-grouped_bar_plot_survivors_by_class()  
+ 
 
 def diverging_bar_plot_survived_and_died_by_sex():
 
-    output_file("DivergingBarPlot.html")
+    output_file("./Arquivos_html/DivergingBarPlot.html")
     
     df_survived = data.data.loc[data.data["Survived"] == 1]
     df_died = data.data.loc[data.data["Survived"] == 0]
@@ -145,12 +144,10 @@ def diverging_bar_plot_survived_and_died_by_sex():
 
     return plot
 
-diverging_bar_plot_survived_and_died_by_sex()
-
-# ScatterPlot de sobrevivencia por valor  pago
 
 
-show(grouped_bar_plot_survivors_by_class())
+
+
 
 
 

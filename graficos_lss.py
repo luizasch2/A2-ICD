@@ -80,6 +80,3 @@ def sexSurvive():
 
     output_file("sexSurvive.html")
     return p
-
-
-show(ageClassSex())
