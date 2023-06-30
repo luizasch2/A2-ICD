@@ -1,7 +1,7 @@
 import data
 from bokeh.models import ColumnDataSource
 from bokeh.layouts import gridplot
-from bokeh.models import Range1d
+from bokeh.models import HoverTool
 from bokeh.models.annotations import Span, BoxAnnotation
 from bokeh.plotting import figure, output_file, save, show
 from bokeh.transform import dodge
@@ -29,24 +29,45 @@ def grouped_bar_plot_survivors_by_class():
                     died_by_class.loc[died_by_class["Pclass"] == 2]["Not_survived"].iloc[0],
                     died_by_class.loc[died_by_class["Pclass"] == 3]["Not_survived"].iloc[0]]))
 
-    plot = figure(x_range=source.data['classes'], height=250)
+    plot = figure(x_range=source.data["classes"], height=250)
     
-    plot.vbar(x=dodge('classes', -0.2, range=plot.x_range), top='survived', source=source,
-        color='green', width=0.4, legend_label='Sobreviveu')
-    plot.vbar(x=dodge('classes', 0.2, range=plot.x_range), top='died', source=source,
-        color='red', width=0.4, legend_label='Não Sobreviveu')
+    plot.vbar(x=dodge("classes", -0.21, range=plot.x_range), top="survived", source=source,
+        color="#2e8b57", width=0.4, legend_label="Survived")
+    plot.vbar(x=dodge("classes", 0.21, range=plot.x_range), top="died", source=source,
+        color="#cd5c5c", width=0.4, legend_label="Not survived")
+    
+    hover = HoverTool()
+    hover.tooltips = [("Survivors", "@survived"), ("Dead", "@died")]
+    plot.add_tools(hover)
 
     plot.y_range.start = 0
 
     plot.legend.location = "top_left"
     plot.legend.background_fill_alpha = 0
-    plot.legend.padding = 10
+    plot.legend.padding = 30
     plot.legend.label_text_font = "calibri"
-
-    plot.y_range.start = 0
-    plot.x_range.range_padding = 0.3
+    
     plot.xgrid.grid_line_color = None
 
-    return plot
+    plot.width = 854
+    plot.height = 480
+    plot.background_fill_color = "LightGray"
+
+    plot.title.text = "Survivors by Class"
+    plot.title.text_color = "Black"
+    plot.title.text_font = "arial"
+    plot.title.text_font_size = "30px"
+    plot.title.align = "center"
+
+    plot.xaxis.axis_label = "Class"
+    
+    plot.yaxis.axis_label = "Frequency"
+
+    plot.yaxis[0].ticker.num_minor_ticks = 0
+
+    plot.toolbar.logo = None   
+    plot.toolbar.autohide = True
+
+    return show(plot)
 
 grouped_bar_plot_survivors_by_class()
