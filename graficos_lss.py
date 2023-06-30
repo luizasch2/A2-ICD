@@ -1,6 +1,6 @@
 import numpy as np
 from bokeh.plotting import figure, show
-from bokeh.io import output_notebook
+from bokeh.io import output_file
 from bokeh.models import ColumnDataSource, FactorRange
 from bokeh.transform import factor_cmap
 import numpy as np
@@ -32,6 +32,7 @@ def ageSurvived():
     p.legend.location = "top_right"
     p.legend.title = "Legenda"
 
+    output_file("ageSurvived.html")
     return p
 
 def ageClassSex():
@@ -60,7 +61,7 @@ def ageClassSex():
     # Tirar grid eixo y
     p.xgrid.grid_line_color = None
 
-
+    output_file("ageClassSex.html")
     return p
 
 
@@ -77,7 +78,7 @@ def sexSurvive():
     p.legend.orientation = "horizontal"
     p.legend.location = "top_center"
 
-
+    output_file("sexSurvive.html")
     return p
 
 
