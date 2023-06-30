@@ -67,5 +67,16 @@ hist, edges = np.histogram(df['Age'], bins=10)
 
 source5 = ColumnDataSource(data=dict(hist=hist, left=edges[:-1], right=edges[1:]))
 
+"""
+Objetos ColumnDataSource para os Gráficos - Paulo
+"""
 
+#GRÁFICO 2
 
+survived = ["Survived", "Died"]
+embarked = ["Cherbourg", "Queenstown", "Southampton"]
+
+source6 = {"Embarked": embarked,
+        "Survived": [len(data[(data["Survived"] == 1) & (data["Embarked"] == "C")]), len(data[(data["Survived"] == 1) & (data["Embarked"] == "Q")]), len(data[(data["Survived"] == 1) & (data["Embarked"] == "S")])],
+        "Died": [len(data[(data["Survived"] == 0) & (data["Embarked"] == "C")]), len(data[(data["Survived"] == 0) & (df["Embarked"] == "Q")]), len(df[(df["Survived"] == 0) & (df["Embarked"] == "S")])] 
+        }
