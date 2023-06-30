@@ -5,16 +5,14 @@ from bokeh.models import ColumnDataSource, FactorRange
 from bokeh.transform import factor_cmap
 import numpy as np
 import pandas as pd
-import data
+from data import *
 
 def ageSurvived():
-    age = data.data.Age.dropna()
-    survives_age = data.data[data.data.Survived == 1].Age.dropna()
+    age = data.Age.dropna()
+    survives_age = data[data.Survived == 1].Age.dropna()
 
     # Criar DataFrame atualizado sem valores ausentes
     df_age_surv = pd.DataFrame({'age': age, 'survives_age': survives_age})
-
-    source1 = ColumnDataSource(df_age_surv)
     
     # Criando a figura
     p = figure(title='Histograma de Idades e Sobreviventes', x_axis_label='Idade', y_axis_label='Contagem')
@@ -36,65 +34,43 @@ def ageSurvived():
 
     return p
 
-def ageClassSex(data):
-    # Combina as colunas 'Pclass' e 'Sex' de data
-    data['class_gender'] = data['Pclass'].astype(str) + "-" + data['Sex']
-
-    # Calcula os quartis
-    ages = data.groupby('class_gender')['Age'].describe()
-
-    # Cria a fonte de dados para o gráfico com a nova coluna
-    source = ColumnDataSource(data=dict(
-        groups=list(ages.index),
-        lower=ages['25%'],
-        q2=ages['50%'],
-        upper=ages['75%'],
-        iqr=ages['75%'] - ages['25%'],
-        upper_whisker=np.minimum(ages['75%'] + 1.5*(ages['75%'] - ages['25%']), ages['max']),
-        lower_whisker=np.maximum(ages['25%'] - 1.5*(ages['75%'] - ages['25%']), ages['min']),
-    ))
-
+def ageClassSex():
     # Cria o gráfico
     p = figure(x_range=FactorRange(factors=list(ages.index)), height=300, title="Box Plot de Idades por Classe e Sexo")
 
     # Barras de quartil
-    p.segment('groups', 'upper', 'groups', 'q2', source=source, line_color="black")
+    p.segment('groups', 'upper', 'groups', 'q2', source=source1, line_color="black")
     p.segment('groups', 'lower', 'groups', 'q2', source=source, line_color="black")
 
     # Retângulos de quartil
-    p.vbar('groups', 0.7, 'q2', 'upper', source=source, fill_color="#E08E79", line_color="black")
-    p.vbar('groups', 0.7, 'lower', 'q2', source=source, fill_color="#3B8686", line_color="black")
+    p.vbar('groups', 0.7, 'q2', 'upper', source=source1, fill_color="#E08E79", line_color="black")
+    p.vbar('groups', 0.7, 'lower', 'q2', source=source1, fill_color="#3B8686", line_color="black")
 
     # Whiskers
-    p.rect('groups', 'lower_whisker', 0.2, 0.01, source=source, line_color="black")
-    p.rect('groups', 'upper_whisker', 0.2, 0.01, source=source, line_color="black")
+    p.rect('groups', 'lower_whisker', 0.2, 0.01, source=source1, line_color="black")
+    p.rect('groups', 'upper_whisker', 0.2, 0.01, source=source1, line_color="black")
 
     # Linhas de whisker
-    p.segment('groups', 'lower_whisker', 'groups', 'lower', source=source, line_color="black")
-    p.segment('groups', 'upper_whisker', 'groups', 'upper', source=source, line_color="black")
+    p.segment('groups', 'lower_whisker', 'groups', 'lower', source=source1, line_color="black")
+    p.segment('groups', 'upper_whisker', 'groups', 'upper', source=source1, line_color="black")
 
     return p
 
 
 # hbar de genero e sobreviventes
-def sexSurvive(data):
-    mulheres_sobreviventes = data[(data['Survived'] == 1) & (data['Sex'] == 'female')].shape[0]
-    homens_sobreviventes = data[(data['Survived'] == 1) & (data['Sex'] == 'male')].shape[0]
-
-    source = ColumnDataSource(data=dict(generos=['Masculino', 'Feminino'], sobreviventes=[homens_sobreviventes, mulheres_sobreviventes]))
-
+def sexSurvive():
     p = figure(y_range=['Masculino', 'Feminino'], height=300, width=600, title="Sobreviventes por gênero", x_axis_label='Sobreviventes', y_axis_label='Gênero')
 
     # sua própria paleta de cores
     palette=['navy', 'red']
 
     p.hbar(y='generos', right='sobreviventes', height=0.3, color=factor_cmap('generos', palette=palette, factors=['Masculino', 'Feminino']),
-            legend_field='generos', source=source)
+            legend_field='generos', source=source2)
         
     p.legend.orientation = "horizontal"
-    p.legend.location = "top_center"
+    p.legend.location = "top_right"
 
 
     return p
 
-show(ageSurvived())
+show(sexSurvive())
