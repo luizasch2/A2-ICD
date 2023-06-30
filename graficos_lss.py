@@ -2,6 +2,7 @@ import numpy as np
 from bokeh.plotting import figure, show
 from bokeh.io import output_notebook
 from bokeh.models import ColumnDataSource, FactorRange
+from bokeh.transform import factor_cmap
 import numpy as np
 import pandas as pd
 import data
@@ -14,19 +15,20 @@ def ageSurvived():
     df_age_surv = pd.DataFrame({'age': age, 'survives_age': survives_age})
 
     source1 = ColumnDataSource(df_age_surv)
-
+    
     # Criando a figura
-    p = figure(title='Histograma de Idades', x_axis_label='Idade', y_axis_label='Contagem')
+    p = figure(title='Histograma de Idades e Sobreviventes', x_axis_label='Idade', y_axis_label='Contagem')
 
     # Criando o histograma para 'age' e adicionando uma legenda
     hist, edges = np.histogram(df_age_surv['age'], bins=20, range=(np.nanmin(df_age_surv['age']), np.nanmax(df_age_surv['age'])))
-    p.quad(top=hist, bottom=0, left=edges[:-1], right=edges[1:], fill_color='blue', line_color='black', legend_label='Idade')
+    p.quad(top=hist, bottom=0, left=edges[:-1], right=edges[1:], fill_color='#403532', line_color='black', legend_label='Idade')
 
     # Verificando se há valores presentes em 'survives_age' antes de criar o histograma
     if len(survives_age) > 0:
         # Criando o histograma para 'survives_age' e adicionando uma legenda
         hist1, edges1 = np.histogram(df_age_surv['survives_age'], bins=20, range=(np.nanmin(df_age_surv['age']), np.nanmax(df_age_surv['age'])))
-        p.quad(top=hist1, bottom=0, left=edges1[:-1], right=edges1[1:], fill_color='green', line_color='black', legend_label='Sobreviventes')
+        p.quad(top=hist1, bottom=0, left=edges1[:-1], right=edges1[1:], fill_color='blue', line_color='black', legend_label='Sobreviventes')
+
 
     # Adicionando a legenda à figura
     p.legend.location = "top_right"
@@ -72,3 +74,27 @@ def ageClassSex(data):
     p.segment('groups', 'upper_whisker', 'groups', 'upper', source=source, line_color="black")
 
     return p
+
+
+# hbar de genero e sobreviventes
+def sexSurvive(data):
+    mulheres_sobreviventes = data[(data['Survived'] == 1) & (data['Sex'] == 'female')].shape[0]
+    homens_sobreviventes = data[(data['Survived'] == 1) & (data['Sex'] == 'male')].shape[0]
+
+    source = ColumnDataSource(data=dict(generos=['Masculino', 'Feminino'], sobreviventes=[homens_sobreviventes, mulheres_sobreviventes]))
+
+    p = figure(y_range=['Masculino', 'Feminino'], height=300, width=600, title="Sobreviventes por gênero", x_axis_label='Sobreviventes', y_axis_label='Gênero')
+
+    # sua própria paleta de cores
+    palette=['navy', 'red']
+
+    p.hbar(y='generos', right='sobreviventes', height=0.3, color=factor_cmap('generos', palette=palette, factors=['Masculino', 'Feminino']),
+            legend_field='generos', source=source)
+        
+    p.legend.orientation = "horizontal"
+    p.legend.location = "top_center"
+
+
+    return p
+
+show(ageSurvived())
