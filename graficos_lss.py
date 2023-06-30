@@ -32,18 +32,3 @@ def ageSurvived():
     p.legend.title = "Legenda"
 
     return p
-
-def ageFare():
-    # Criando a figura
-    p = figure(title='Gráfico de Dispersão', x_axis_label='Idade', y_axis_label='Tarifa')
-
-    # Criando o gráfico de dispersão
-    p.circle('Age', 'Fare', source=data.source, color='navy', size=10, alpha=0.5, legend_label='Idade x Tarifa')
-
-    # Adicionando a legenda à figura
-    p.legend.location = "top_right"
-    p.legend.title = "Legenda"
-
-
-    return p
-
