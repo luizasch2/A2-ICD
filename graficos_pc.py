@@ -45,56 +45,11 @@ def scatter_fare_age():
     grafico.toolbar.autohide = True
     grafico.toolbar_location = "right"
 
+    hover = HoverTool()
+    hover.tooltips = [("Name", "@Name"), ("Sex", "@Sex"), ("Fare", "@Fare"), ("Embarked", "@Embarked"), ("Survived", "@Survived")]
+    grafico.add_tools(hover)
+
     return grafico
-
-show(scatter_fare_age())
-
-def boxplot_fare_survived():
-    output_file("BoxPlot.html")
-    data.data["Embarked"] = data.data["Embarked"].replace({"C": "Cherbourg", "S":"Southampton", "Q":"Queenstown"})
-    embarked = data.data.Embarked.dropna().unique()
-    grafico = figure(x_range = embarked)
-    #Calculando os quantis
-    quantis = data.data.groupby("Embarked").Fare.quantile([0.25, 0.5, 0.75])
-    quantis = quantis.unstack().reset_index()
-    quantis.columns = ["Embarked", "q1", "q2", "q3"]
-    df = pd.merge(data.data, quantis, on="Embarked", how="left")
-
-    #Calculando Outliers
-    iqr = df.q3 - df.q1
-    df["acima"] = df.q3 + 1.5*iqr
-    df["abaixo"] = df.q1 - 1.5*iqr
-
-    source = ColumnDataSource(df)
-
-    #Configurando a figura
-    grafico.width = 854
-    grafico.height = 480
-    grafico.background_fill_color = "#d3d3d3"
-    grafico.title = "Taxa Paga por Local de Embarque"
-
-    #Toolbar
-    grafico.toolbar.logo = None
-    grafico.toolbar.autohide = True
-    grafico.toolbar_location = "right"
-
-    #Legendas
-    grafico.axis.axis_label_text_font = "Trebuchet MS"
-    grafico.title.text_font = "Trebuchet MS"
-    grafico.xaxis.axis_label = "Local de Embarque"
-    grafico.yaxis.axis_label = "Valor Pago"
-
-    #Intervalo de Outliers
-    bigodes = Whisker(base="Embarked", upper="acima", lower="abaixo", source=source)
-    bigodes.upper_head.size = 20
-    bigodes.lower_head.size = 20
-    grafico.add_layout(bigodes)
-
-    #Caixa
-    grafico.vbar("Embarked", 0.7, "q1", "q2", source=source, line_color="black")
-    grafico.vbar("Embarked", 0.7, "q2", "q3", source=source, line_color="black")
-
-    return show(grafico)
 
 def stacked_bars_embarked():
     df = data.data
@@ -103,11 +58,12 @@ def stacked_bars_embarked():
     embarked = ["Cherbourg", "Queenstown", "Southampton"]
     
     source = {"Embarked": embarked,
-            "Survived": [len(df[(df["Survived"] == 1) & (df["Embarked"] == "C")]), len(df[(df["Survived"] == 1) & (df["Embarked"] == "Q")]), len(df[(df["Survived"] == 1) & (df["Embarked"] == "S")])],
-            "Died": [len(df[(df["Survived"] == 0) & (df["Embarked"] == "C")]), len(df[(df["Survived"] == 0) & (df["Embarked"] == "Q")]), len(df[(df["Survived"] == 0) & (df["Embarked"] == "S")])], 
-            }
+             "Survived": [len(df[(df["Survived"] == 1) & (df["Embarked"] == "C")]), len(df[(df["Survived"] == 1) & (df["Embarked"] == "Q")]), len(df[(df["Survived"] == 1) & (df["Embarked"] == "S")])],
+             "Died": [len(df[(df["Survived"] == 0) & (df["Embarked"] == "C")]), len(df[(df["Survived"] == 0) & (df["Embarked"] == "Q")]), len(df[(df["Survived"] == 0) & (df["Embarked"] == "S")])], 
+             }
 
     #Definindo a figura
+    output_file("StackedBarsEmbarked.html")
     grafico = figure(x_range=embarked)
     grafico.width = 854
     grafico.height = 480
@@ -139,8 +95,10 @@ def stacked_bars_embarked():
     grafico.toolbar.autohide = True
 
     return grafico
+show(stacked_bars_embarked())
 
-def histograma_tarifa():
+def histogram_fare():
+    output_file("HistogramFare.html")
     df = pd.DataFrame.dropna(data.data)
 
     grafico = figure(width=854, height=480, toolbar_location=None, title="Histograma de Valor Pago")
@@ -165,4 +123,4 @@ def histograma_tarifa():
 
     return grafico
 
-#show(histograma_tarifa())
+#show(histogram_fare())
