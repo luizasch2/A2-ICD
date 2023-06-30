@@ -1,6 +1,6 @@
 import data
 from bokeh.models.annotations import BoxAnnotation, Span
-from bokeh.models import ColumnDataSource, Whisker, FactorRange
+from bokeh.models import ColumnDataSource, Whisker, FactorRange, HoverTool
 from bokeh.plotting import figure, save, output_file, show
 from bokeh.transform import factor_cmap
 import pandas as pd
@@ -85,28 +85,50 @@ def boxplot_fare_survived():
     grafico.scatter("Fare", "Survived", source=outliers, size=6, color="black", alpha=0.3)
     return show(grafico)
     
-boxplot_fare_survived()
+#boxplot_fare_survived()
 
 def stacked_bars_embarked():
     df = data.data
 
-    eixo_x = ["Q", "S", "C"]
+    survived = ["Survived", "Died"]
+    embarked = ["Cherbourg", "Queenstown", "Southampton"]
+    
+    source = {"Embarked": embarked,
+            "Survived": [len(df[(df["Survived"] == 1) & (df["Embarked"] == "C")]), len(df[(df["Survived"] == 1) & (df["Embarked"] == "Q")]), len(df[(df["Survived"] == 1) & (df["Embarked"] == "S")])],
+            "Died": [len(df[(df["Survived"] == 0) & (df["Embarked"] == "C")]), len(df[(df["Survived"] == 0) & (df["Embarked"] == "Q")]), len(df[(df["Survived"] == 0) & (df["Embarked"] == "S")])], 
+            }
 
-    freq = pd.crosstab(data.data["Survived"], data.data["Embarked"])
-    freq.columns = ["Survived", "Dyed", "sla"]
-
-    source = ColumnDataSource(freq.reset_index()) 
-
-    locais_de_embarque = data.data.Embarked.dropna().unique()
-    Survived = ["0" , "1"]
-    grafico = figure(x_range=locais_de_embarque)
-
+    #Definindo a figura
+    grafico = figure(x_range=embarked)
     grafico.width = 854
     grafico.height = 480
+    grafico.background_fill_color = "LightGray"
 
-    grafico.title = "Sobreviventes por Local de Embarque"
+    grafico.xgrid.grid_line_color = None
 
-    grafico.vbar_stack(Survived, x="Embarked", width=0.9, color=["#24ed32", "#ae21fe"], source=source, legend_label=Survived)
+    hover = HoverTool()
+    hover.tooltips = [("Dead", "@Died"), ("Survivors", "@Survived")]
+    grafico.add_tools(hover)
+
+    grafico.title.text = "Sobreviventes por Local de Embarque"
+    grafico.title.text_color = "Black"
+    grafico.title.text_font = "Arial"
+    grafico.title.text_font_size = "30px"
+    grafico.title.align = "center"
+
+    grafico.y_range.start = 0
+    grafico.yaxis[0].ticker.num_minor_ticks = 0
+
+    grafico.vbar_stack(survived, x="Embarked", width=0.9, color=["#2e8b57", "#cd5c5c"], source=source, legend_label=survived)
+    
+    grafico.legend.location = "top_left"
+    grafico.legend.background_fill_alpha = 0
+    grafico.legend.padding = 30
+    grafico.legend.label_text_font = "calibri"
+
+    grafico.toolbar.logo = None   
+    grafico.toolbar.autohide = True
+
     return grafico
 
 show(stacked_bars_embarked())
