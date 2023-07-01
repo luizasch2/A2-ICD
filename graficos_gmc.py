@@ -76,8 +76,6 @@ def grouped_bar_plot_survivors_by_class():
 
 def diverging_bar_plot_survived_and_died_by_sex():
 
-    output_file("./Arquivos_html/DivergingBarPlot.html")
-    
     df_survived = data.data.loc[data.data["Survived"] == 1]
     df_died = data.data.loc[data.data["Survived"] == 0]
 
@@ -142,13 +140,11 @@ def diverging_bar_plot_survived_and_died_by_sex():
     plot.toolbar.logo = None   
     plot.toolbar.autohide = True
 
+    output_file("DivergingBarPlot.html")
+
     return plot
 
-
-
-
-
-
+show(diverging_bar_plot_survived_and_died_by_sex())
 
 
 
