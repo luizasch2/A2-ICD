@@ -104,8 +104,6 @@ def stacked_bars_embarked():
 
     return grafico
 
-show(stacked_bars_embarked())
-
 def histogram_fare():
     #Definindo arquivo de saída
     output_file("HistogramFare.html")
