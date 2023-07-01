@@ -1,5 +1,5 @@
 import data
-from bokeh.models import ColumnDataSource, FactorRange
+from bokeh.models import ColumnDataSource, FactorRange, FixedTicker, FuncTickFormatter
 from bokeh.layouts import gridplot
 from bokeh.models import HoverTool
 from bokeh.plotting import figure, output_file, save, show
@@ -74,8 +74,6 @@ def grouped_bar_plot_survivors_by_class():
 
     return plot
 
-grouped_bar_plot_survivors_by_class()  
-
 def diverging_bar_plot_survived_and_died_by_sex():
 
     output_file("DivergingBarPlot.html")
@@ -89,14 +87,14 @@ def diverging_bar_plot_survived_and_died_by_sex():
     died_by_sex = count_died_by_sex[["Sex","Not_survived"]]
 
     variables = ["Total", "Female", "Male"]
-    status = ["Survived", "Not survived"]
+    status = ["Survived", "Not_survived"]
 
     Survivors = {"variables" : variables,
             "Survived"   : [survived_by_sex["Survived"].sum(),
                         survived_by_sex.loc[survived_by_sex["Sex"] == "female"]["Survived"].iloc[0],
                         survived_by_sex.loc[survived_by_sex["Sex"] == "male"]["Survived"].iloc[0]]}
     Dead = {"variables" : variables,
-            "Not survived"   : [died_by_sex["Not_survived"].sum()*(-1),
+            "Not_survived"   : [died_by_sex["Not_survived"].sum()*(-1),
                         died_by_sex.loc[died_by_sex["Sex"] == "female"]["Not_survived"].iloc[0]*(-1),
                         died_by_sex.loc[died_by_sex["Sex"] == "male"]["Not_survived"].iloc[0]*(-1)]}
 
@@ -107,10 +105,10 @@ def diverging_bar_plot_survived_and_died_by_sex():
                 legend_label= "Survived")
 
     plot.hbar_stack(status, y="variables", color="#cd5c5c", height=0.9, source=ColumnDataSource(Dead),
-                legend_label= "Not survived")
+                legend_label= "Not_survived")
 
     hover = HoverTool()
-    hover.tooltips = [("Survivors", "@survived"), ("Dead", "@died")]
+    hover.tooltips = [("Survivors", "@Survived"), ("Dead", "@Not_survived")]
     plot.add_tools(hover)
 
     ticks = list(range(-600, 601, 100))
@@ -146,8 +144,6 @@ def diverging_bar_plot_survived_and_died_by_sex():
 
     return plot
 
-diverging_bar_plot_survived_and_died_by_sex()
-
 def stripplot_survival_by_fare():
     output_file("StripPlot.html")
 
@@ -158,13 +154,31 @@ def stripplot_survival_by_fare():
 
     plot = figure(title="Fare vs. Survived", x_axis_label="Fare", y_axis_label="Survived")
     plot.circle(x="Fare", y="Survived", source=source)
-    plot.yaxis.ticker = [0,1]
+    
+    plot.yaxis.ticker = FixedTicker(ticks=[0, 1])
+    plot.yaxis.formatter = FuncTickFormatter(code="""if (tick == 0) {return 'Dead';} else if (tick == 1) {return 'Survivors';}""")
 
-    show(plot)
+    plot.ygrid.grid_line_color = None
+
+    plot.width = 854
+    plot.height = 480
+    plot.background_fill_color = "LightGray"
+
+    plot.title.text = "Survivors by Fare"
+    plot.title.text_color = "Black"
+    plot.title.text_font = "arial"
+    plot.title.text_font_size = "30px"
+    plot.title.align = "center"
+
+    plot.xaxis.axis_label = "Fare"
+    
+    plot.yaxis.axis_label = None
+
+    plot.toolbar.logo = None   
+    plot.toolbar.autohide = True
 
     return plot
 
-show(stripplot_survival_by_fare())
 
 
 
