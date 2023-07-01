@@ -20,8 +20,9 @@ p9 = histogram_age()
 
 p10 = grouped_bar_plot_survivors_by_class()
 p11 = diverging_bar_plot_survived_and_died_by_sex()
+p12 = stripplot_survival_by_fare()
 
-grid = gridplot([[p1], [p2], [p3], [p4], [p5], [p6], [p7], [p8], [p9]])
+grid = gridplot([[p1], [p2], [p3], [p4], [p5], [p6], [p7], [p8], [p9], [p10], [p11], [p12]])
 
 output_file("Titanic.html")
 save(grid)
