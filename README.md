@@ -14,6 +14,8 @@ acessados nos arquivos `graficos_gmc.py`(Guilherme Castilho), `graficos_gqcl.py`
 
 Elas também podem ser visualizadas pelos HTMLs contidos no repositório.
 
+Link para o site com as visualizações: [https://luizasch2.github.io/A2-ICD/](https://luizasch2.github.io/A2-ICD/)
+
 # Módulos
 O arquivo `data.py` é utilizado para realizar a manipulação dos dados, de maneira a gerar objetos ColumnDataSource.
 Estes objetos são importados mos arquivos onde as visualizações são desenvolvidas, de modo a ser possível utilizar
