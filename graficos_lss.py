@@ -27,7 +27,10 @@ def ageSurvived():
         hist1, edges1 = np.histogram(df_age_surv['survives_age'], bins=20, range=(np.nanmin(df_age_surv['age']), np.nanmax(df_age_surv['age'])))
         p.quad(top=hist1, bottom=0, left=edges1[:-1], right=edges1[1:], fill_color='blue', line_color='black', legend_label='Sobreviventes')
 
-
+    p.toolbar.logo = None
+    p.toolbar.autohide = True
+    p.toolbar_location = "right"
+    
     # Adicionando a legenda à figura
     p.legend.location = "top_right"
     p.legend.title = "Legenda"
@@ -61,6 +64,10 @@ def ageClassSex():
     # Tirar grid eixo y
     p.xgrid.grid_line_color = None
 
+    p.toolbar.logo = None
+    p.toolbar.autohide = True
+    p.toolbar_location = "right"
+
     output_file("ageClassSex.html")
     return p
 
@@ -77,6 +84,10 @@ def sexSurvive():
         
     p.legend.orientation = "horizontal"
     p.legend.location = "top_center"
+
+    p.toolbar.logo = None
+    p.toolbar.autohide = True
+    p.toolbar_location = "right"
 
     output_file("sexSurvive.html")
     return p
