@@ -4,12 +4,13 @@ from bokeh.layouts import gridplot
 from bokeh.models import HoverTool
 from bokeh.plotting import figure, output_file, save, show
 from bokeh.transform import dodge
+import random
 import pandas as pd
 
 
 def grouped_bar_plot_survivors_by_class():
     
-    output_file("./Arquivos_html/GroupedBarPlot.html")
+    output_file("GroupedBarPlot.html")
     
     df_survived = data.data.loc[data.data["Survived"] == 1]
     df_died = data.data.loc[data.data["Survived"] == 0]
@@ -72,10 +73,13 @@ def grouped_bar_plot_survivors_by_class():
     plot.toolbar.autohide = True
 
     return plot
- 
+
+grouped_bar_plot_survivors_by_class()  
 
 def diverging_bar_plot_survived_and_died_by_sex():
 
+    output_file("DivergingBarPlot.html")
+    
     df_survived = data.data.loc[data.data["Survived"] == 1]
     df_died = data.data.loc[data.data["Survived"] == 0]
 
@@ -140,11 +144,41 @@ def diverging_bar_plot_survived_and_died_by_sex():
     plot.toolbar.logo = None   
     plot.toolbar.autohide = True
 
-    output_file("DivergingBarPlot.html")
+    return plot
+
+diverging_bar_plot_survived_and_died_by_sex()
+
+def stripplot_survival_by_fare():
+    output_file("StripPlot.html")
+
+    # df_survived = data.data.loc[data.data["Survived"] == 1]
+    # df_died = data.data.loc[data.data["Survived"] == 0]
+
+    # survive = df_survived["Fare"].value_counts().sort_index().reset_index()
+    # died = df_died["Fare"].value_counts().sort_index().reset_index()
+
+    # df_survived_by_fare = data.data[["Fare"]].drop_duplicates()
+    # df_survived_by_fare = df_survived_by_fare.merge(survive, on="Fare", how="left")
+    # df_survived_by_fare = df_survived_by_fare.merge(died, on="Fare", how="left")
+    # df_survived_by_fare.columns = ["Fare", "Survived", "Not_survived"]
+    df_jittered = data.data.copy()
+    df_jittered['Survived'] = df_jittered['Survived'].apply(lambda x: x + random.uniform(-0.3, 0.3))
+
+    source = ColumnDataSource(df_jittered)
+
+    plot = figure(title="Fare vs. Survived", x_axis_label="Fare", y_axis_label="Survived")
+    plot.circle(x="Fare", y="Survived", source=source)
+    plot.yaxis.ticker = [0,1]
+
+    show(plot)
 
     return plot
 
-show(diverging_bar_plot_survived_and_died_by_sex())
+show(stripplot_survival_by_fare())
+
+
+
+
 
 
 
