@@ -151,16 +151,6 @@ diverging_bar_plot_survived_and_died_by_sex()
 def stripplot_survival_by_fare():
     output_file("StripPlot.html")
 
-    # df_survived = data.data.loc[data.data["Survived"] == 1]
-    # df_died = data.data.loc[data.data["Survived"] == 0]
-
-    # survive = df_survived["Fare"].value_counts().sort_index().reset_index()
-    # died = df_died["Fare"].value_counts().sort_index().reset_index()
-
-    # df_survived_by_fare = data.data[["Fare"]].drop_duplicates()
-    # df_survived_by_fare = df_survived_by_fare.merge(survive, on="Fare", how="left")
-    # df_survived_by_fare = df_survived_by_fare.merge(died, on="Fare", how="left")
-    # df_survived_by_fare.columns = ["Fare", "Survived", "Not_survived"]
     df_jittered = data.data.copy()
     df_jittered['Survived'] = df_jittered['Survived'].apply(lambda x: x + random.uniform(-0.3, 0.3))
 
