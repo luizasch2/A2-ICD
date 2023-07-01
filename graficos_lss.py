@@ -30,7 +30,7 @@ def ageSurvived():
     p.toolbar.logo = None
     p.toolbar.autohide = True
     p.toolbar_location = "right"
-    
+
     # Adicionando a legenda à figura
     p.legend.location = "top_right"
     p.legend.title = "Legenda"
@@ -83,7 +83,7 @@ def sexSurvive():
             legend_field='generos', source=source2)
         
     p.legend.orientation = "horizontal"
-    p.legend.location = "top_center"
+    p.legend.location = "bottom_right"
 
     p.toolbar.logo = None
     p.toolbar.autohide = True
