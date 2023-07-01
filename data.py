@@ -72,11 +72,18 @@ Objetos ColumnDataSource para os Gráficos - Paulo
 """
 
 #GRÁFICO 2
+dados_be = data
 
 survived = ["Survived", "Died"]
 embarked = ["Cherbourg", "Queenstown", "Southampton"]
 
-source6 = {"Embarked": embarked,
-        "Survived": [len(data[(data["Survived"] == 1) & (data["Embarked"] == "C")]), len(data[(data["Survived"] == 1) & (data["Embarked"] == "Q")]), len(data[(data["Survived"] == 1) & (data["Embarked"] == "S")])],
-        "Died": [len(data[(data["Survived"] == 0) & (data["Embarked"] == "C")]), len(data[(data["Survived"] == 0) & (df["Embarked"] == "Q")]), len(df[(df["Survived"] == 0) & (df["Embarked"] == "S")])] 
+source6 = {"Embarked": ["Cherbourg", "Queenstown", "Southampton"],
+        "Survived": [len(dados_be[(dados_be["Survived"] == 1) & (dados_be["Embarked"] == "C")]), len(dados_be[(dados_be["Survived"] == 1) & (dados_be["Embarked"] == "Q")]), len(dados_be[(dados_be["Survived"] == 1) & (dados_be["Embarked"] == "S")])],
+        "Died": [len(dados_be[(dados_be["Survived"] == 0) & (dados_be["Embarked"] == "C")]), len(dados_be[(dados_be["Survived"] == 0) & (dados_be["Embarked"] == "Q")]), len(dados_be[(dados_be["Survived"] == 0) & (dados_be["Embarked"] == "S")])] 
         }
+
+
+#GRÁFICO 3
+dataframe_para_histograma = pd.DataFrame.dropna(data)
+histograma, edges2 = np.histogram(df["Fare"], bins=25)
+source7 = ColumnDataSource(data = dict(hist=histograma,  left=edges2[:-1], right=edges2[1:]))
